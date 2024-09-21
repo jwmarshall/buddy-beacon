@@ -1,7 +1,7 @@
 # Buddy Beacon
 
 Buddy Beacon is a hardware project using ESPNOW to broadcast a beacon signal from a transmitter to one or more receivers.
-The project is designed to be used with the ESP32 and/or ESP8622 microcontrollers.
+The project is designed to be used with the ESP32-S2 microcontrollers.
 
 The purpose of this project is to allow your pet to press a button on the transmitter device to send a beacon signal to the receiver device, which in this case is a simple PWM LED lamp.
 
