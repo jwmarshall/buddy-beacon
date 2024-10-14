@@ -78,6 +78,7 @@ extern "C" void app_main(void)
     /* Initialize GPIO and PWM */
     init_gpio();
     init_led_pwm();
+    turn_on_led();
 
     /* Print the device's MAC address */
     print_mac_address();
@@ -151,8 +152,10 @@ void init_espnow(void)
     peerInfo.ifidx = WIFI_IF_STA;
     peerInfo.encrypt = true; // Enable encryption
 
-    /* Since we don't know the transmitter's MAC address in advance, set it to all zeros */
-    memset(peerInfo.peer_addr, 0, ESP_NOW_ETH_ALEN);
+    /* Set the peer MAC address */
+    // 4C:11:AE:6F:A9:24
+    uint8_t peer_mac[] = {0x4C, 0x11, 0xAE, 0x6F, 0xA9, 0x24};
+    memcpy(peerInfo.peer_addr, peer_mac, ESP_NOW_ETH_ALEN);
 
     /* Set Local Master Key (LMK) */
     memcpy(peerInfo.lmk, ESPNOW_LMK, ESP_NOW_KEY_LEN);
@@ -180,6 +183,7 @@ void espnow_recv_cb(const esp_now_recv_info_t *recv_info, const uint8_t *data, i
     char mac_str[18];
 
     /* Convert sender's MAC address to string */
+    // 4C:11:AE:6F:A9:24
     snprintf(mac_str, sizeof(mac_str),
              "%02X:%02X:%02X:%02X:%02X:%02X",
              recv_info->src_addr[0], recv_info->src_addr[1], recv_info->src_addr[2],
@@ -212,8 +216,8 @@ void turn_on_led(void)
     ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, (1 << LEDC_DUTY_RES) / 2));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));
 
-    /* Keep the LED on for 2 seconds */
-    vTaskDelay(pdMS_TO_TICKS(2000));
+    /* Keep the LED on for 10 seconds */
+    vTaskDelay(pdMS_TO_TICKS(10000));
 
     /* Turn off the LED */
     ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, 0));
