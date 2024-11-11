@@ -16,10 +16,18 @@ The purpose of this project is to allow your pet to press a button on the transm
 The transmitter device is a simple ESP32 microcontroller with a button connected to a GPIO pin.
 When the button is pressed, the device will broadcast a beacon signal to all listening devices.
 
-GPIO_PIN: 32 (Momentary button)
+### Interface Pins
+- GPIO_PIN: 32 (Momentary button)
+
+### Models
+- [Transmitter](https://www.thingiverse.com/thing:4755888)
 
 ## Receiver Device
 The receiver device is a simple ESP32 microcontroller with a PWM LED connected to a GPIO pin.
 When the receiver device receives a beacon signal from the transmitter device, it will turn on the LED for a short period of time.
 
-GPIO_PIN: 33 (PWM LED)
+# Interface Pins
+- GPIO_PIN: 33 (PWM LED)
+
+### Models
+- [Receiver](https://www.printables.com/model/825409-waves-midcentury-led-lamp)
